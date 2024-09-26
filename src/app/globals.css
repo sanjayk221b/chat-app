@@ -24,10 +24,19 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  overflow: hidden;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.default-line-color {
+  background-color: theme("colors.system.purple50");
+}
+
+.changed-line-color {
+  background-color: theme("colors.system.green60");
 }
