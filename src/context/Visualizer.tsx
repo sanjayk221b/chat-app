@@ -18,7 +18,8 @@ interface SortingAlgorithmContextType {
   setAnimationSpeed: (speed: number) => void;
   isAnimationComplete: boolean;
   setIsAnimationComplete: (isComplete: boolean) => void;
-  runAnimation: () => void;
+  resetArrayAndAnimation: () => void;
+  runAnimation: (animations: AnimationArrayType) => void;
   requiresReset: boolean;
 }
 
@@ -66,9 +67,85 @@ export const SortingAlgorithmProvier = ({
     setArrayToSort(tempArray);
     setIsAnimationComplete(false);
     setIsSorting(false);
+
+    const highestId = window.setTimeout(() => {
+      for (let i = highestId; i >= 0; i--) {
+        window.clearTimeout(i);
+      }
+    }, 0);
+
+    setTimeout(() => {
+      const arrayLines = document.getElementsByClassName(
+        "arrayLine"
+      ) as HTMLCollectionOf<HTMLElement>;
+
+      for (let i = 0; i < arrayLines.length; i++) {
+        arrayLines[i].classList.remove("change-line-color");
+        arrayLines[i].classList.add("default-line-color");
+      }
+    }, 0);
   };
 
-  const runAnimation = (animations: AnimationArrayType) => {};
+  const runAnimation = (animations: AnimationArrayType) => {
+    setIsSorting(true);
+
+    const inverseSpeed = (1 / animationSpeed) * 200;
+    const arrayLines = document.getElementsByClassName(
+      "array-line"
+    ) as HTMLCollectionOf<HTMLElement>;
+
+    const updateClassList = (
+      indexes: number[],
+      addClassName: string,
+      removeClassName: string
+    ) => {
+      indexes.forEach((index) => {
+        arrayLines[index].classList.add(addClassName);
+        arrayLines[index].classList.remove(removeClassName);
+      });
+    };
+
+    const updateHeightValue = (
+      lineIndex: number,
+      newHeight: number | undefined
+    ) => {
+      if (newHeight === undefined) return;
+      arrayLines[lineIndex].style.height = `${newHeight}px`;
+    };
+
+    animations.forEach((animation, index) => {
+      setTimeout(() => {
+        const [values, isSwap] = animation;
+
+        if (!isSwap) {
+          updateClassList(values, "change-line-color", "default-line-color");
+          setTimeout(() => {
+            updateClassList(values, "default-line-color", "change-line-color");
+          }, inverseSpeed);
+        } else {
+          const [lineIndex, newHeight] = values;
+          updateHeightValue(lineIndex, newHeight);
+        }
+      }, index * inverseSpeed);
+    });
+
+    const finalTimeout = animations.length * inverseSpeed;
+    setTimeout(() => {
+      Array.from(arrayLines).forEach((line) => {
+        line.classList.remove("pulse-animation", "change-line-color");
+        line.classList.add("default-line-color");
+      });
+
+      setTimeout(() => {
+        Array.from(arrayLines).forEach((line) => {
+          line.classList.remove("pulse-animation", "change-line-color");
+          line.classList.add("default-line-color");
+        });
+        setIsSorting(false);
+        setIsAnimationComplete(true);
+      }, 1000);
+    }, finalTimeout);
+  };
 
   const value = {
     arrayToSort,
