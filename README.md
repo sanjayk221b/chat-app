@@ -4,3 +4,9 @@ This project helps to visualize different sorting algorithms, including Bubble S
 
 
 ![Sorting Visualizer](./public/image.png)
+
+- Bubble Sort
+- Selection Sort
+- Quick Sort
+- Insertion Sort
+- Merge Sort
