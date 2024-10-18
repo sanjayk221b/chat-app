@@ -8,7 +8,7 @@ import {
   algorithmOptions,
   generateAnimationArray,
   sortingAlgorithmsData,
-} from "../lib/uitils";
+} from "../lib/utils";
 import { FaPlayCircle } from "react-icons/fa";
 import { RxReset } from "react-icons/rx";
 

@@ -1,4 +1,4 @@
-import { selectOptionsType } from "@/src/lib/types";
+import { SelectOptionsType } from "@/src/lib/types";
 
 export const Select = ({
   options,
@@ -6,10 +6,10 @@ export const Select = ({
   onChange,
   isDisabled = false,
 }: {
-  options: selectOptionsType[];
+  options: SelectOptionsType[];
   defaultValue: string;
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  isDisabled: boolean;
+  isDisabled?: boolean;
 }) => {
   return (
     <div className="inline-block relative w-48">
