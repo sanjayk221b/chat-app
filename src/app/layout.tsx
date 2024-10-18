@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { SortingAlgorithmProvier } from "../context/Visualizer";
+import { SortingAlgorithmProvider } from "../context/Visualizer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <SortingAlgorithmProvier>{children}</SortingAlgorithmProvier>
+        <SortingAlgorithmProvider>{children}</SortingAlgorithmProvider>
       </body>
     </html>
   );
